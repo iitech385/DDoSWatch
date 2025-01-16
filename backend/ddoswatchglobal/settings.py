@@ -9,63 +9,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True  # Temporarily enable debug to see detailed errors
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    'web-production-fc153.up.railway.app',
-    '.railway.app',
-]
+ALLOWED_HOSTS = ['*']  # Temporarily allow all hosts
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-    'https://web-production-fc153.up.railway.app',
-    'https://d-do-s-watch.vercel.app',
-]
-
-CORS_ORIGIN_REGEX_WHITELIST = [
-    r"^https://d-do-s-watch.*\.vercel\.app$",
-]
-
+CORS_ALLOW_ALL_ORIGINS = True  # Temporarily allow all origins
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-]
-
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-]
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-fc153.up.railway.app',
-    'https://d-do-s-watch.vercel.app',
-]
-
-CSRF_TRUSTED_ORIGINS_REGEX = [
-    r"^https://d-do-s-watch.*\.vercel\.app$",
-]
 
 # Session settings
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False  # Temporarily disable secure cookies
 CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = None  # Temporarily disable SameSite
+CSRF_COOKIE_SAMESITE = None
 CSRF_USE_SESSIONS = False
 CSRF_COOKIE_HTTPONLY = False
 
@@ -79,14 +35,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'users',  # Add the users app
     'api',
+    'paypal.standard.ipn',  # Add PayPal IPN
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Move CORS middleware to top
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -94,6 +52,45 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Database
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3'),
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=True,
+    )
+}
+
+# Rest Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Temporarily allow any access
+    ]
+}
+
+# Debug logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
+
+# Keep existing settings below this line
 ROOT_URLCONF = 'ddoswatchglobal.urls'
 
 TEMPLATES = [
@@ -113,15 +110,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ddoswatchglobal.wsgi.application'
-
-# Database
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -156,28 +144,4 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Rest Framework settings
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
-}
-
-# Debug logging for database
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-    },
-} 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' 
