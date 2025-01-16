@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import { api } from '../api/config';
 import './LoginPage.css';
 const Login: React.FC = () => {
   const [emailOrUsername, setEmailOrUsername] = useState('');
@@ -55,7 +56,7 @@ const Login: React.FC = () => {
       
       console.log('Login payload:', { ...payload, password: '***' });
       
-      const response = await fetch('http://localhost:8000/api/login/', {
+      const response = await fetch(api.endpoints.login, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +109,7 @@ const Login: React.FC = () => {
     setIsVerifying(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/verify-login/', {
+      const response = await fetch(api.endpoints.verifyLogin, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,7 +146,7 @@ const Login: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8000/api/resend-verification/', {
+      const response = await fetch(api.endpoints.resendVerification, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

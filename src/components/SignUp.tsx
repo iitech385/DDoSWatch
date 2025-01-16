@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import VerifyEmail from './VerifyEmail';
 import toast from 'react-hot-toast';
+import { api } from '../api/config';
 
 interface PasswordRequirement {
   met: boolean;
@@ -43,7 +44,7 @@ const SignUp: React.FC = () => {
   const [showRequirements, setShowRequirements] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/csrf/', {
+    fetch(api.endpoints.csrf, {
       credentials: 'include',
     });
   }, []);
@@ -115,7 +116,7 @@ const SignUp: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/signup/', {
+      const response = await fetch(api.endpoints.signup, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,12 +131,12 @@ const SignUp: React.FC = () => {
       const data = await response.json();
 
       if (data.success) {
+        setUser(data.username);
         setVerificationEmail(email);
         setShowVerification(true);
       } else {
         toast.error(data.message || 'Signup failed');
         setError(data.message);
-        return;
       }
     } catch (err) {
       console.error('Signup error:', err);
@@ -156,7 +157,6 @@ const SignUp: React.FC = () => {
     const newPassword = e.target.value;
     setPassword(newPassword);
 
-    // Just update requirements status without showing them
     setPasswordRequirements({
       length: { 
         met: newPassword.length >= 8,
@@ -188,7 +188,7 @@ const SignUp: React.FC = () => {
   };
 
   if (showVerification) {
-    return <VerifyEmail email={verificationEmail} />;
+    return <VerifyEmail email={verificationEmail} onBackToSignup={handleBackToSignup} />;
   }
 
   return (

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './navbar.css';
 import logo from '../assets/DD.png';
 import { useUser } from '../context/UserContext';
+import { api } from '../api/config';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -30,7 +31,7 @@ const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/logout/', {
+      const response = await fetch(api.endpoints.logout, {
         method: 'POST',
         credentials: 'include',
         headers: {

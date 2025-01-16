@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 import './ProductPricing.css';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../api/config';
 
 const ProductPricing: React.FC = () => {
   const { user } = useUser();
@@ -42,7 +43,7 @@ const ProductPricing: React.FC = () => {
     if (productId === 'premium') {
       try {
         setIsProcessing(true);
-        const response = await fetch('http://localhost:8000/api/check-subscription/', {
+        const response = await fetch(api.endpoints.checkSubscription, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ const ProductPricing: React.FC = () => {
         if (data.isSubscribed) {
           setError('Download coming soon!');
         } else {
-          const checkoutResponse = await fetch('http://localhost:8000/api/create-checkout-session/', {
+          const checkoutResponse = await fetch(api.endpoints.createCheckoutSession, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ const ProductPricing: React.FC = () => {
 
   const handleSubscribe = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/create-subscription/', {
+      const response = await fetch(api.endpoints.createSubscription, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -110,7 +111,7 @@ const ProductPricing: React.FC = () => {
 
   const handleDownloadClick = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/create-subscription/', {
+      const response = await fetch(api.endpoints.createSubscription, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -148,7 +149,7 @@ const ProductPricing: React.FC = () => {
 
   const checkPaymentStatus = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/check-payment/', {
+      const response = await fetch(api.endpoints.checkPayment, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -159,7 +160,7 @@ const ProductPricing: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         if (data.isSubscribed) {
-          window.location.href = 'http://localhost:8000/api/download/premium/';
+          window.location.href = api.endpoints.downloadPremium;
         }
       }
     } catch (error) {
@@ -170,7 +171,7 @@ const ProductPricing: React.FC = () => {
   useEffect(() => {
     const checkSubscription = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/check-subscription/', {
+        const response = await fetch(api.endpoints.checkSubscription, {
           credentials: 'include',
         });
         const data = await response.json();
