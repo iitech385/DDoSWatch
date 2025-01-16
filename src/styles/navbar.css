@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2vh 5vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0.7) 60%, transparent 100%);
+}
+
+.logo {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.logo-img {
+    height: 27vh;
+    width: auto;
+    display: block;
+    margin-top: -8.5vh;
+    margin-left: -4vw;
+}
+
+/* Default Navigation Links */
+.nav-links {
+    display: flex; /* Always visible on desktop */
+    align-items: center;
+    gap: 2vw;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Mobile-Specific Styles */
+@media (max-width: 768px) {
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        background: black; /* Solid background to prevent text overlap */
+        width: calc(100% - 10vw);
+        text-align: center;
+        padding: 2vh 5vw;
+        margin: 0;
+        position: absolute; /* Anchored under the menu icon */
+        top: 8vh; /* Adjust based on your hamburger height */
+        right: 5vw;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        z-index: 1000; /* Ensure it appears above other elements */
+        transform: translateY(-20px);
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .nav-links.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .menu-icon {
+        display: flex;
+    }
+}
+
+/* Nav Items */
+.nav-links li {
+    cursor: pointer;
+    font-size: 1rem;
+    color: white;
+    padding: 1vh 0;
+}
+
+.nav-links li:hover {
+    transform: scale(1.2);
+    color: purple;
+}
+
+/* Hamburger Menu Icon */
+.menu-icon {
+    display: none; /* Hidden by default on desktop */
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    position: fixed;
+    top: 2vh;
+    right: 5vw;
+    z-index: 15;
+}
+
+.menu-icon .hamburger {
+    width: 25px;
+    height: 3px;
+    background: purple; /* Purplish theme */
+    transition: all 0.3s ease-in-out;
+}
+
+.menu-icon .hamburger.open:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-icon .hamburger.open:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-icon .hamburger.open:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile-Specific: Show Hamburger */
+@media (max-width: 768px) {
+    .menu-icon {
+        display: flex; /* Force visible */
+    }
+}
+
+.navbar-logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo img {
+    height: 200px;
+    width: auto;
+}
+
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-button {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-button:hover {
+    color: purple;
+}
+
+.dropdown-menu {
+    display: none;  /* Hidden by default */
+    position: absolute;
+    right: 0;
+    top: calc(100% + 2px);
+    background: none;
+    border-radius: 8px;
+    padding: 2px;
+    z-index: 1000;
+    min-width: 120px;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.user-menu:hover .dropdown-menu {
+    display: flex;  /* Show on hover */
+}
+
+.logout-button {
+    display: block;
+    width: 100%;
+    padding: 2px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.logout-button:hover {
+    transform: scale(1.05);
+}
+
+.logout-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 24px;
+    padding: 4px 12px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.logout-circle:hover {
+    background-color: purple;
+}
+
+.logout-text {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.nav-profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nav-profile-initial {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #7928CA, #FF0080);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}

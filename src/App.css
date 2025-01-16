@@ -1,0 +1,121 @@
+/* Reset all margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black; /* Ensure the entire page is black */
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scrolling if needed */
+}
+
+html {
+  height: 100%; /* Ensure it covers the entire viewport */
+}
+
+.btn-alt {
+  background: transparent; /* Transparent button */
+  border: 2px solid violet; /* Violet border */
+  color: violet;
+  padding: 0.8em 1.5em; /* Dynamic padding */
+  border-radius: 1em; /* Rounded rectangle */
+  transition: all 0.3s ease;
+}
+
+.btn-alt:hover {
+  background: linear-gradient(45deg, violet, rgb(242, 188, 87));
+  color: white;
+  border: 2px solid rgb(250, 249, 248);
+  transform: scale(1.1);
+}
+
+
+
+@keyframes animate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 10px 20px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px; /* Reduce spacing for smaller screens */
+  }
+
+  .nav-links li {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  .logo-img {
+    height: 8vh; /* Smaller logo for smaller screens */
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .navbar {
+    padding: 15px 30px;
+  }
+
+  .nav-links li {
+    font-size: 1.1rem; /* Adjust font size for tablets */
+  }
+
+  .logo-img {
+    height: 10vh; /* Adjust logo size for tablets */
+  }
+  .app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: black; /* Ensure consistent background */
+    overflow: hidden;
+  }
+  
+  .page-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+}
+
+.open-chat-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background: linear-gradient(45deg, violet, purple);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  z-index: 1000;
+}
+
+.open-chat-button:hover {
+  transform: scale(1.05);
+}

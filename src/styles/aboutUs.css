@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* About Us Section */
+.about-us-section {
+    color: #fff;
+    padding: 0; /* No extra padding, fully centered */
+    text-align: center;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    min-height: 100vh; /* Full viewport height */
+    display: flex; /* Flexbox centering */
+    flex-direction: column;
+    justify-content: center; /* Vertically center content */
+    align-items: center; /* Horizontally center content */
+    background-color: black; /* Match clean black background */
+}
+
+/* Container */
+.about-us-container {
+    max-width: 100%; /* Restrict width for readability */
+    margin: 0 auto;
+    padding: 5vh 2rem; /* Add vertical padding for spacing */
+    animation: fadeInUp 1.5s ease-in-out; /* Subtle fade-in animation */
+}
+
+/* Heading */
+.about-us-heading {
+    font-size: 3rem; /* Adjusted for prominence */
+    font-weight: 700; /* Bold text */
+    margin-bottom: -10vh; /* Adjust spacing below heading */
+    color: #fff; /* White color for heading */
+    letter-spacing: 0.1rem; /* Subtle letter spacing */
+    text-transform: uppercase; /* All caps */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), /* Inner glow */
+                 0 0 15px rgba(255, 255, 255, 0.5); /* Softer outer glow */
+}
+
+/* Subheading */
+.about-us-subheading {
+    font-size: 2rem; /* Reduced size for visual balance */
+    font-weight: 600; /* Semi-bold text */
+    margin-top: 10vh; /* Adjust spacing above */
+    color: rgb(255, 233, 188); /* Soft warm white for subheading */
+    letter-spacing: 0.05rem; /* Subtle letter spacing */
+    text-transform: uppercase; /* All caps */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), /* Slight glow effect */
+                 0 0 12px rgba(255, 255, 255, 0.4); /* Softer outer glow */
+}
+
+/* Paragraph Text */
+.about-us-text {
+    font-size: 1.3rem; /* Enhanced readability */
+    line-height: 2.2; /* Improved line spacing */
+    margin: 3vh 0; /* Vertical spacing between paragraphs */
+    color: rgba(255, 255, 255, 0.85); /* Softer white for paragraph text */
+    font-weight: 400; /* Regular weight for smooth reading */
+    letter-spacing: 0.05rem;
+}
+.about-us-text2 {
+    font-size: 1.6rem; /* Enhanced readability */
+    line-height: 2.2; /* Improved line spacing */
+    margin: 3vh 0; /* Vertical spacing between paragraphs */
+    color: rgba(255, 255, 255, 0.85); /* Softer white for paragraph text */
+    font-weight: 700; /* Regular weight for smooth reading */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.6), /* Slight glow effect */
+    0 0 12px rgba(255, 255, 255, 0.4); /* Softer outer glow */
+}
+    
+
+
+/* Optional Highlight for Keywords */
+.highlight {
+    font-weight: 600;
+    background: linear-gradient(90deg, #bb69aa, #facc88); /* Colorful gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Animation for Container */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

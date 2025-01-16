@@ -1,0 +1,124 @@
+/* FAQ Page */
+.faq-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to the left */
+  justify-content: flex-start; /* Ensure content starts at the top */
+  background: radial-gradient(circle, #2b002b, black 70%);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  padding: 15vh 12vw; /* Adjust padding for proper alignment */
+  box-sizing: border-box;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  width: 100%; /* Ensure the container spans the full viewport */
+}
+
+/* FAQ Title */
+.faq-title {
+  font-size: 3rem; /* Larger title */
+  font-weight: bold;
+  color: white;
+  margin-bottom: 2rem;
+  text-align: left; /* Align title to the left */
+  width: 100%; /* Ensure it spans the full width of the page */
+}
+
+/* FAQ List */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Larger space between FAQ items */
+  width: 100%; /* Span the full available width */
+  max-width: 90vw; /* Expand width to match the viewport width */
+  margin-left: auto; /* Push the FAQ list to the right */
+  margin-right: auto; /* Center content horizontally */
+}
+
+/* FAQ Item */
+.faq-item {
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6); /* Bigger shadow for better emphasis */
+  width: 100%; /* Make each item span the full width of the list */
+  text-align: left; /* Align text to the left for better reading */
+}
+
+/* FAQ Question */
+.faq-question {
+  font-size: 1.8rem; /* Larger question text */
+  font-weight: bold;
+  margin-bottom: 1rem; /* Increase space below question */
+  color: violet; /* Highlight question */
+}
+
+/* FAQ Answer */
+.faq-answer {
+  font-size: 1.2rem; /* Larger answer text */
+  color: #ccc;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2vh 5vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0.7) 60%, transparent 100%);
+}
+
+.logo {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.logo-img {
+  height: 27vh;
+  width: auto;
+  display: block;
+  margin-top: -8.5vh;
+  margin-left: -4vw;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li {
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+}
+
+.nav-links li button {
+  margin: 0;
+  padding: 0.8em 1.5em;
+  font-size: 1rem;
+}
+
+.nav-links li:hover {
+  transform: scale(1.2);
+  color: purple;
+}
+
+/* Ensure Scrollbar Alignment */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll; /* Force scrollbar visibility */
+}
