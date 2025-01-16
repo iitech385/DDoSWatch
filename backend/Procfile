@@ -1,1 +1,1 @@
-web: python manage.py setup_db && python manage.py collectstatic --noinput && gunicorn ddoswatchglobal.wsgi --bind 0.0.0.0:$PORT
+web: python manage.py setup_db && gunicorn ddoswatchglobal.wsgi --bind 0.0.0.0:$PORT
