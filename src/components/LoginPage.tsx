@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import { api, defaultOptions } from '../api/config';
+import { api, defaultOptions, initializeCsrf, getHeaders } from '../api/config';
 import './LoginPage.css';
 
 const Login: React.FC = () => {
@@ -36,17 +36,9 @@ const Login: React.FC = () => {
 
   // Initialize CSRF token
   useEffect(() => {
-    const initializeCsrf = async () => {
-      try {
-        await fetch(api.endpoints.csrf, {
-          method: 'GET',
-          credentials: 'include',
-        });
-      } catch (error) {
-        console.error('Error fetching CSRF token:', error);
-      }
-    };
-    initializeCsrf();
+    initializeCsrf().catch(error => {
+      console.error('Error initializing CSRF:', error);
+    });
   }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -74,7 +66,8 @@ const Login: React.FC = () => {
       
       const response = await fetch(api.endpoints.login, {
         method: 'POST',
-        ...defaultOptions,
+        credentials: 'include',
+        headers: getHeaders(),
         body: JSON.stringify(payload),
       });
 
@@ -93,10 +86,7 @@ const Login: React.FC = () => {
           setShowVerification(true);
         } else {
           setUser(data.username);
-          const savedPicture = localStorage.getItem('profilePicture');
-          if (savedPicture) {
-            setProfilePicture(savedPicture);
-          } else if (data.profile_picture) {
+          if (data.profile_picture) {
             setProfilePicture(data.profile_picture);
             localStorage.setItem('profilePicture', data.profile_picture);
           }

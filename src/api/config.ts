@@ -17,13 +17,35 @@ function getCsrfToken() {
   return cookieValue;
 }
 
+// Function to initialize CSRF token
+export async function initializeCsrf() {
+  try {
+    const response = await fetch(`${API_URL}/api/csrf/`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return getCsrfToken();
+  } catch (error) {
+    console.error('Error fetching CSRF token:', error);
+    return null;
+  }
+}
+
+// Get default headers with CSRF token
+export function getHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': getCsrfToken() || '',
+  };
+}
+
 // Default fetch options
 export const defaultOptions = {
   credentials: 'include' as RequestCredentials,
-  headers: {
-    'Content-Type': 'application/json',
-    'X-CSRFToken': getCsrfToken() || '',
-  },
+  headers: getHeaders(),
 };
 
 export const api = {

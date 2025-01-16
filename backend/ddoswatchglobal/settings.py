@@ -16,23 +16,33 @@ ALLOWED_HOSTS = ['*']  # Temporarily allow all hosts
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
-    'https://d-do-s-watch.vercel.app',
-    'https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app',
+    'https://d-do-s-watch.vercel.app'
 ]
+
 CORS_ALLOW_CREDENTIALS = True
+
+# Allow all Vercel preview domains
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^https://d-do-s-watch-[a-zA-Z0-9-]+-iitech385-gmailcoms-projects\.vercel\.app$'
+]
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
-    'https://d-do-s-watch.vercel.app',
-    'https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app',
+    'https://d-do-s-watch.vercel.app'
 ]
-CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_HTTPONLY = False
+
+# Allow all Vercel preview domains for CSRF
+CSRF_TRUSTED_ORIGINS_REGEXES = [
+    r'^https://d-do-s-watch-[a-zA-Z0-9-]+-iitech385-gmailcoms-projects\.vercel\.app$'
+]
+
+CSRF_COOKIE_SAMESITE = 'None'  # Required for cross-site requests
 CSRF_COOKIE_SECURE = True
 CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'None'  # Required for cross-site requests
 
 # Application definition
 INSTALLED_APPS = [
