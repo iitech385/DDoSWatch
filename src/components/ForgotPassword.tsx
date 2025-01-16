@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/forgotpasswordpage.css'; // Forgot Password Page CSS
+import './ForgotPassword.css';
 import { Link } from 'react-router-dom'; // Use Link for navigation
 import toast from 'react-hot-toast';
 
