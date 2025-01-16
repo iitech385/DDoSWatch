@@ -1,15 +1,202 @@
-/* Basic styles for signup form */
-.signup-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.error-message {
-  color: red;
-  font-size: 14px;
-}
+/* Signup Page Styling */
+.signup-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background: radial-gradient(circle, #2b002b, black 70%); /* Signup Page Gradient */
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Signup Container */
+  .signup-container {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 110%; /* Same as Login Page */
+    margin-left: 55vh; /* Same as Login Page */
+  }
+  
+  /* Signup Title and Subtitle */
+  .signup-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1rem;
+  }
+  
+  .signup-subtitle {
+    font-size: 1.2rem;
+    color: violet; /* Retaining Signup Page Colors */
+    margin-bottom: 1rem; /* Reduced to account for error message spacing */
+  }
+  
+  /* Signup Form */
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Same as login page */
+  }
+  
+  /* Make all inputs consistent size */
+  .signup-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 0; /* Remove margin since we're using gap */
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .signup-input::placeholder {
+    color: #ccc;
+  }
+  
+  /* Password section specific styles */
+  .password-section {
+    width: 100%;
+    margin-bottom: 0; /* Remove margin since we're using gap */
+  }
+  
+  .password-section .signup-input {
+    margin-bottom: 0; /* Remove extra space if requirements show */
+  }
+  
+  .password-requirements {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0; /* Remove margin since we're using gap */
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  /* Requirement items styling */
+  .requirement {
+    font-size: 0.8rem;
+    color: #ff4444; /* Red by default */
+    margin: 0.3rem 0;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .requirement.met {
+    color: #4CAF50 !important; /* Force green when met */
+  }
+  
+  /* Focus styles */
+  .signup-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px violet;
+  }
+  
+  /* Animation for requirements */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Signup Button */
+  .signup-btn {
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: linear-gradient(45deg, violet, purple);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: transform 0.2s ease, background 0.3s ease;
+    margin: 0; /* Remove margins since we're using gap */
+  }
+  
+  .signup-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, purple, violet); /* Retain Signup Button Colors */
+  }
+  
+  /* Footer Links */
+  .signup-footer {
+    margin-top: 2rem;
+  }
+  
+  .login-link {
+    color: violet; /* Same as Signup Page Colors */
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .login-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Media Queries */
+  @media (min-width: 1200px) {
+    .signup-container {
+        width: 500px; /* Match the Login Page Container Width */
+    }
+  }
+  
+  .form-group {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  
+  .error-message {
+    color: #ff4444;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .signup-input.error {
+    border-color: #ff4444;
+  }
+  
+  .signup-input.error:focus {
+    border-color: #ff4444;
+    box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.2);
+  }
+  
+  /* Add this new style for the error message at the top */
+  .signup-error {
+    color: #ff4444;
+    background: rgba(255, 68, 68, 0.1);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    margin: 1rem 0 2rem 0; /* Add more space above and below */
+    font-size: 1rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+    font-weight: 500; /* Make the text slightly bolder */
+  }
+  
+  /* Add a subtle shake animation for the error */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+  
+  .signup-error {
+    animation: fadeIn 0.3s ease, shake 0.5s ease;
+  }
+  
