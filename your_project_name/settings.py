@@ -16,7 +16,7 @@ ALLOWED_HOSTS.extend(
 # Add CORS settings
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite dev server
-    "https://your-frontend-domain.vercel.app",  # Replace with your Vercel domain
+    "https://your-vercel-domain.vercel.app"  # Add your actual Vercel domain
 ]
 
 STATIC_URL = '/static/'
