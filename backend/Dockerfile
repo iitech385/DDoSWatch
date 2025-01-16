@@ -17,10 +17,8 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p staticfiles
 
-# Set default port
-ENV PORT=8000
+# Make start script executable
+RUN chmod +x start.sh
 
-# Run migrations and collect static files
-CMD python manage.py migrate --noinput && \
-    python manage.py collectstatic --noinput && \
-    gunicorn ddoswatchglobal.wsgi --bind 0.0.0.0:${PORT:-8000} 
+# Start the application
+CMD ["./start.sh"] 
