@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-import { api } from '../api/config';
+import { api, defaultOptions } from '../api/config';
 import './LoginPage.css';
+
 const Login: React.FC = () => {
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,6 +34,21 @@ const Login: React.FC = () => {
     };
   }, [countdown]);
 
+  // Initialize CSRF token
+  useEffect(() => {
+    const initializeCsrf = async () => {
+      try {
+        await fetch(api.endpoints.csrf, {
+          method: 'GET',
+          credentials: 'include',
+        });
+      } catch (error) {
+        console.error('Error fetching CSRF token:', error);
+      }
+    };
+    initializeCsrf();
+  }, []);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError('');
@@ -58,11 +74,7 @@ const Login: React.FC = () => {
       
       const response = await fetch(api.endpoints.login, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': getCookie('csrftoken'),
-        },
-        credentials: 'include',
+        ...defaultOptions,
         body: JSON.stringify(payload),
       });
 
@@ -97,7 +109,7 @@ const Login: React.FC = () => {
       }
     } catch (err) {
       console.error('Login error:', err);
-      setError('Network error occurred. Please try again.');
+      setError(err instanceof Error ? err.message : 'Network error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
