@@ -11,19 +11,19 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS.extend(
-    filter(
-        None,
-        os.environ.get('ALLOWED_HOSTS', '').split(','),
-    )
-)
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'web-production-fc153.up.railway.app',
+    '.railway.app',
+]
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "https://web-production-fc153.up.railway.app",
-    "http://localhost:5173",
-    "https://d-do-s-watch.vercel.app",
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'https://web-production-fc153.up.railway.app',
+    'https://d-do-s-watch.vercel.app',
 ]
 
 CORS_ORIGIN_REGEX_WHITELIST = [
@@ -53,9 +53,8 @@ CORS_ALLOW_HEADERS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://web-production-fc153.up.railway.app",
-    "http://localhost:5173",
-    "https://d-do-s-watch.vercel.app",
+    'https://web-production-fc153.up.railway.app',
+    'https://d-do-s-watch.vercel.app',
 ]
 
 CSRF_TRUSTED_ORIGINS_REGEX = [
@@ -117,25 +116,12 @@ WSGI_APPLICATION = 'ddoswatchglobal.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('PGDATABASE', 'postgres'),
-        'USER': os.environ.get('PGUSER', 'postgres'),
-        'PASSWORD': os.environ.get('PGPASSWORD', 'postgres'),
-        'HOST': os.environ.get('PGHOST', 'localhost'),
-        'PORT': os.environ.get('PGPORT', '5432'),
-        'OPTIONS': {
-            'sslmode': 'require' if os.environ.get('DATABASE_URL') else 'prefer'
-        }
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
-
-if os.environ.get('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
-    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-    DATABASES['default']['OPTIONS'] = {
-        'sslmode': 'require'
-    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -161,8 +147,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = []
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Whitenoise configuration
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
