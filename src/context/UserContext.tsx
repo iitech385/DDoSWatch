@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { api } from '../api/config';
 
 interface UserContextType {
   user: string | null;
@@ -7,25 +8,18 @@ interface UserContextType {
   setProfilePicture: (url: string | null) => void;
 }
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<string | null>(null);
-  const [profilePicture, setProfilePicture] = useState<string | null>(() => {
-    // Initialize from localStorage if user exists
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? localStorage.getItem('profilePicture') : null;
-  });
+  const [loading, setLoading] = useState(true);
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/check-auth/', {
-          method: 'GET',
+        const response = await fetch(api.endpoints.checkAuth, {
           credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          }
         });
 
         if (!response.ok) {
