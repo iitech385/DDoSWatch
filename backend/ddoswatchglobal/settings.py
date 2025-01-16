@@ -117,10 +117,17 @@ WSGI_APPLICATION = 'ddoswatchglobal.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://postgres:postgres@localhost:5432/postgres',
-        conn_max_age=600,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('PGDATABASE', 'postgres'),
+        'USER': os.environ.get('PGUSER', 'postgres'),
+        'PASSWORD': os.environ.get('PGPASSWORD', 'postgres'),
+        'HOST': os.environ.get('PGHOST', 'localhost'),
+        'PORT': os.environ.get('PGPORT', '5432'),
+        'OPTIONS': {
+            'sslmode': 'require' if os.environ.get('DATABASE_URL') else 'prefer'
+        }
+    }
 }
 
 if os.environ.get('DATABASE_URL'):
