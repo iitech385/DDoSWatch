@@ -21,12 +21,12 @@ ALLOWED_HOSTS.extend(
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    "https://d-do-s-watch.vercel.app",
-    "https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app",
-    "https://d-do-s-watch-anghi30aq-iitech385-gmailcoms-projects.vercel.app",
-    "https://d-do-s-watch-8uukl7j9a-iitech385-gmailcoms-projects.vercel.app",
     "https://web-production-fc153.up.railway.app",
     "http://localhost:5173",  # For local development
+]
+
+CORS_ORIGIN_REGEX_WHITELIST = [
+    r"^https://d-do-s-watch.*\.vercel\.app$",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -52,12 +52,12 @@ CORS_ALLOW_HEADERS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://d-do-s-watch.vercel.app",
-    "https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app",
-    "https://d-do-s-watch-anghi30aq-iitech385-gmailcoms-projects.vercel.app",
-    "https://d-do-s-watch-8uukl7j9a-iitech385-gmailcoms-projects.vercel.app",
     "https://web-production-fc153.up.railway.app",
     "http://localhost:5173",  # For local development
+]
+
+CSRF_TRUSTED_ORIGINS_REGEX = [
+    r"^https://d-do-s-watch.*\.vercel\.app$",
 ]
 
 # Session settings
