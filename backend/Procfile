@@ -1,2 +1,2 @@
-release: python manage.py makemigrations && python manage.py migrate --noinput && python manage.py migrate auth && python manage.py migrate admin && python manage.py migrate sessions && python manage.py migrate contenttypes
+release: python manage.py init_db && python manage.py migrate --noinput
 web: gunicorn ddoswatchglobal.wsgi
