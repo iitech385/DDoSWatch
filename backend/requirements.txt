@@ -7,4 +7,5 @@ gunicorn
 whitenoise
 pillow
 django-redis
-django-paypal 
+django-paypal
+python-dotenv 

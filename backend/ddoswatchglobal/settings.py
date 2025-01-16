@@ -118,8 +118,10 @@ WSGI_APPLICATION = 'ddoswatchglobal.wsgi.application'
 # Database
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',
-        conn_max_age=600
+        default='postgresql://postgres:postgres@localhost:5432/postgres',
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=True,
     )
 }
 
@@ -161,4 +163,21 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
+}
+
+# Debug logging for database
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
 } 
