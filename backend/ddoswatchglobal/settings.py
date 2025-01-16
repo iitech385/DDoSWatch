@@ -24,17 +24,33 @@ CORS_ALLOWED_ORIGINS = [
     "https://d-do-s-watch.vercel.app",
     "https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app",
     "https://d-do-s-watch-anghi30aq-iitech385-gmailcoms-projects.vercel.app",
+    "https://web-production-fc153.up.railway.app",
     "http://localhost:5173",  # For local development
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://d-do-s-watch.vercel.app",
     "https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app",
     "https://d-do-s-watch-anghi30aq-iitech385-gmailcoms-projects.vercel.app",
+    "https://web-production-fc153.up.railway.app",
     "http://localhost:5173",  # For local development
 ]
+
+# Session settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_SAMESITE = 'Lax'
 
 # Application definition
 INSTALLED_APPS = [
