@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.db import connection
 import sys
 import time
+import json
+import os
 
 class Command(BaseCommand):
     help = 'Setup database and load initial data'
@@ -49,27 +51,44 @@ class Command(BaseCommand):
                         sys.exit(1)
                     self.stdout.write(f'{table} table exists')
 
-            # Create a default superuser
-            User = get_user_model()
-            if not User.objects.filter(is_superuser=True).exists():
-                self.stdout.write('Creating default superuser...')
-                admin = User.objects.create_superuser(
-                    username='admin',
-                    email='admin@example.com',
-                    password='admin123',
-                    is_active=True,
-                    is_staff=True
-                )
-                # Create related models
-                from users.models import Profile, UserSubscription, UserMFASettings
-                Profile.objects.create(user=admin, avatar='')
-                UserSubscription.objects.create(user=admin, is_premium=True)
-                UserMFASettings.objects.create(user=admin, mfa_enabled=False)
-                self.stdout.write('Created default superuser with related models')
+            # Load data from dump file if it exists
+            dump_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'data_dump.json')
+            if os.path.exists(dump_file):
+                self.stdout.write('Loading data from dump file...')
+                try:
+                    # First try to load the data
+                    call_command('loaddata', dump_file)
+                    self.stdout.write(self.style.SUCCESS('Successfully loaded data from dump file'))
+                except Exception as e:
+                    self.stdout.write(self.style.WARNING(f'Error loading dump file: {str(e)}'))
+                    # If loading fails, try to create default superuser
+                    self.create_default_superuser()
+            else:
+                self.stdout.write('No dump file found, creating default superuser...')
+                self.create_default_superuser()
 
             self.stdout.write(self.style.SUCCESS('Successfully setup database'))
         except Exception as e:
             self.stdout.write(self.style.ERROR(f'Error: {str(e)}'))
             import traceback
             traceback.print_exc()
-            sys.exit(1)  # Exit with error code 
+            sys.exit(1)
+
+    def create_default_superuser(self):
+        """Create a default superuser with related models"""
+        User = get_user_model()
+        if not User.objects.filter(is_superuser=True).exists():
+            self.stdout.write('Creating default superuser...')
+            admin = User.objects.create_superuser(
+                username='admin',
+                email='admin@example.com',
+                password='admin123',
+                is_active=True,
+                is_staff=True
+            )
+            # Create related models
+            from users.models import Profile, UserSubscription, UserMFASettings
+            Profile.objects.create(user=admin, avatar='')
+            UserSubscription.objects.create(user=admin, is_premium=True)
+            UserMFASettings.objects.create(user=admin, mfa_enabled=False)
+            self.stdout.write('Created default superuser with related models') 
