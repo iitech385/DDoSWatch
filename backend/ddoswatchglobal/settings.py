@@ -14,16 +14,25 @@ DEBUG = True  # Temporarily enable debug to see detailed errors
 ALLOWED_HOSTS = ['*']  # Temporarily allow all hosts
 
 # CORS settings
-CORS_ALLOW_ALL_ORIGINS = True  # Temporarily allow all origins
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'https://d-do-s-watch.vercel.app',
+    'https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app',
+]
 CORS_ALLOW_CREDENTIALS = True
 
-# Session settings
-SESSION_COOKIE_SECURE = False  # Temporarily disable secure cookies
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SAMESITE = None  # Temporarily disable SameSite
-CSRF_COOKIE_SAMESITE = None
-CSRF_USE_SESSIONS = False
+# CSRF settings
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+    'https://d-do-s-watch.vercel.app',
+    'https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app',
+]
+CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SECURE = True
+CSRF_USE_SESSIONS = False
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 # Application definition
 INSTALLED_APPS = [

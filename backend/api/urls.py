@@ -1,7 +1,14 @@
 from django.urls import path
 from users import views
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import JsonResponse
+
+@ensure_csrf_cookie
+def get_csrf_token(request):
+    return JsonResponse({'detail': 'CSRF cookie set'})
 
 urlpatterns = [
+    path('csrf/', get_csrf_token, name='csrf'),
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup_view, name='signup'),
     path('logout/', views.logout_view, name='logout'),
