@@ -97,10 +97,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Simplified static file serving
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Create the static directory if it doesn't exist
 STATIC_DIR = BASE_DIR / 'static'
