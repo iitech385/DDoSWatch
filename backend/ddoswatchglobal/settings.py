@@ -22,7 +22,8 @@ ALLOWED_HOSTS.extend(
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     "https://web-production-fc153.up.railway.app",
-    "http://localhost:5173",  # For local development
+    "http://localhost:5173",
+    "https://d-do-s-watch.vercel.app",
 ]
 
 CORS_ORIGIN_REGEX_WHITELIST = [
@@ -53,7 +54,8 @@ CORS_ALLOW_HEADERS = [
 
 CSRF_TRUSTED_ORIGINS = [
     "https://web-production-fc153.up.railway.app",
-    "http://localhost:5173",  # For local development
+    "http://localhost:5173",
+    "https://d-do-s-watch.vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS_REGEX = [
@@ -61,12 +63,12 @@ CSRF_TRUSTED_ORIGINS_REGEX = [
 ]
 
 # Session settings
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_USE_SESSIONS = True
-CSRF_COOKIE_HTTPONLY = True
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = False
 
 # Application definition
 INSTALLED_APPS = [
