@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/signup.css';
+import './SignUp.css';
 
 interface VerifyEmailProps {
   email: string;
