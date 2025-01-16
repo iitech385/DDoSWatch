@@ -42,15 +42,24 @@ class Command(BaseCommand):
 
     def check_table_exists(self, table_name):
         """Check if a table exists in the database"""
+        db_engine = settings.DATABASES['default']['ENGINE']
         with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT EXISTS (
-                    SELECT 1 
-                    FROM pg_tables 
-                    WHERE tablename = %s
-                );
-            """, [table_name])
-            return cursor.fetchone()[0]
+            if 'sqlite3' in db_engine:
+                cursor.execute("""
+                    SELECT name 
+                    FROM sqlite_master 
+                    WHERE type='table' AND name=?;
+                """, [table_name])
+            else:  # PostgreSQL
+                cursor.execute("""
+                    SELECT EXISTS (
+                        SELECT 1 
+                        FROM pg_tables 
+                        WHERE tablename = %s
+                    );
+                """, [table_name])
+            result = cursor.fetchone()
+            return bool(result[0] if result else False)
 
     def handle(self, *args, **kwargs):
         try:
@@ -61,13 +70,7 @@ class Command(BaseCommand):
 
             # Run migrations
             self.stdout.write('Running migrations...')
-            call_command('migrate')
-
-            # Verify auth_user table exists
-            if not self.check_table_exists('auth_user'):
-                self.stdout.write('auth_user table not found, running migrations again...')
-                call_command('migrate', 'auth', '--fake-initial')
-                call_command('migrate')
+            call_command('migrate', '--noinput')
 
             # Create superuser if it doesn't exist
             User = get_user_model()
