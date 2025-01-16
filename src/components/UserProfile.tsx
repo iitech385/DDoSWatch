@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/userprofile.css';
+import '../styles/profile.css';
 import Switch from '@mui/material/Switch';
 import { useUser } from '../context/UserContext';
 import { toast } from 'react-hot-toast';

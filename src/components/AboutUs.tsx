@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/aboutUs.css'; // Correct path for the file
+import '../styles/aboutUs.css';
 
 const AboutUs: React.FC = () => {
   return (

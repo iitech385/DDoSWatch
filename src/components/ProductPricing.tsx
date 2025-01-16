@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../context/UserContext';
-import '../styles/productpricing.css';
+import '../styles/ProductPricing.css';
 import { useNavigate } from 'react-router-dom';
 
 const ProductPricing: React.FC = () => {
