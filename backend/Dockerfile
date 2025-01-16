@@ -17,7 +17,10 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p staticfiles
 
+# Set default port
+ENV PORT=8000
+
 # Run migrations and collect static files
 CMD python manage.py migrate --noinput && \
     python manage.py collectstatic --noinput && \
-    gunicorn ddoswatchglobal.wsgi --bind 0.0.0.0:$PORT 
+    gunicorn ddoswatchglobal.wsgi --bind 0.0.0.0:${PORT:-8000} 
