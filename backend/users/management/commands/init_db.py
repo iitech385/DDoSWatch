@@ -40,6 +40,18 @@ class Command(BaseCommand):
             return False
         return True
 
+    def check_table_exists(self, table_name):
+        """Check if a table exists in the database"""
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT EXISTS (
+                    SELECT 1 
+                    FROM pg_tables 
+                    WHERE tablename = %s
+                );
+            """, [table_name])
+            return cursor.fetchone()[0]
+
     def handle(self, *args, **kwargs):
         try:
             # Wait for database
@@ -52,18 +64,10 @@ class Command(BaseCommand):
             call_command('migrate')
 
             # Verify auth_user table exists
-            with connection.cursor() as cursor:
-                cursor.execute("""
-                    SELECT EXISTS (
-                        SELECT FROM information_schema.tables 
-                        WHERE table_name = 'auth_user'
-                    );
-                """)
-                table_exists = cursor.fetchone()[0]
-                if not table_exists:
-                    self.stdout.write('auth_user table not found, running migrations again...')
-                    call_command('migrate', 'auth')
-                    call_command('migrate')
+            if not self.check_table_exists('auth_user'):
+                self.stdout.write('auth_user table not found, running migrations again...')
+                call_command('migrate', 'auth', '--fake-initial')
+                call_command('migrate')
 
             # Create superuser if it doesn't exist
             User = get_user_model()
