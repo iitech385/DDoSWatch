@@ -23,6 +23,7 @@ ALLOWED_HOSTS.extend(
 CORS_ALLOWED_ORIGINS = [
     "https://d-do-s-watch.vercel.app",
     "https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app",
+    "https://d-do-s-watch-anghi30aq-iitech385-gmailcoms-projects.vercel.app",
     "http://localhost:5173",  # For local development
 ]
 
@@ -31,6 +32,7 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "https://d-do-s-watch.vercel.app",
     "https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app",
+    "https://d-do-s-watch-anghi30aq-iitech385-gmailcoms-projects.vercel.app",
     "http://localhost:5173",  # For local development
 ]
 
