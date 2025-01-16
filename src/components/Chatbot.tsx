@@ -1,8 +1,7 @@
 import React, { useState, ChangeEvent, KeyboardEvent, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import "./../styles/chatbot.css";
-
+import './Chatbot.css';
 // Initialize Gemini
 const genAI = new GoogleGenerativeAI('AIzaSyAE585XIwXHTzYz9T2s3K-XOZiCGmj7x30');
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });

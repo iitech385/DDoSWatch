@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/signup.css';
+import './SignUp.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import VerifyEmail from './VerifyEmail';
