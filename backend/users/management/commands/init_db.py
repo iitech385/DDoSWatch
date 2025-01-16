@@ -4,29 +4,66 @@ from django.contrib.auth import get_user_model
 from django.db import connection
 from users.models import UserMFASettings, UserSubscription, Profile
 import time
+import psycopg2
+from django.conf import settings
+import os
 
 class Command(BaseCommand):
     help = 'Initialize database with migrations and create superuser if needed'
 
+    def wait_for_db(self):
+        """Wait for database to be available"""
+        self.stdout.write('Waiting for database...')
+        db_settings = settings.DATABASES['default']
+        if 'postgres' in db_settings.get('ENGINE', ''):
+            dbname = db_settings.get('NAME')
+            user = db_settings.get('USER')
+            password = db_settings.get('PASSWORD')
+            host = db_settings.get('HOST')
+            port = db_settings.get('PORT')
+
+            for i in range(30):  # Try for 30 seconds
+                try:
+                    conn = psycopg2.connect(
+                        dbname=dbname,
+                        user=user,
+                        password=password,
+                        host=host,
+                        port=port
+                    )
+                    conn.close()
+                    self.stdout.write(self.style.SUCCESS('Database is ready!'))
+                    return True
+                except psycopg2.OperationalError:
+                    self.stdout.write(f'Database not ready, waiting... ({i+1}/30)')
+                    time.sleep(1)
+            return False
+        return True
+
     def handle(self, *args, **kwargs):
         try:
-            # Wait for database to be ready
-            max_retries = 5
-            retry_count = 0
-            while retry_count < max_retries:
-                try:
-                    connection.ensure_connection()
-                    break
-                except Exception as e:
-                    retry_count += 1
-                    if retry_count == max_retries:
-                        raise e
-                    self.stdout.write(f'Database not ready, retrying... ({retry_count}/{max_retries})')
-                    time.sleep(2)
+            # Wait for database
+            if not self.wait_for_db():
+                self.stdout.write(self.style.ERROR('Database connection failed after 30 seconds'))
+                return
 
             # Run migrations
             self.stdout.write('Running migrations...')
             call_command('migrate')
+
+            # Verify auth_user table exists
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT EXISTS (
+                        SELECT FROM information_schema.tables 
+                        WHERE table_name = 'auth_user'
+                    );
+                """)
+                table_exists = cursor.fetchone()[0]
+                if not table_exists:
+                    self.stdout.write('auth_user table not found, running migrations again...')
+                    call_command('migrate', 'auth')
+                    call_command('migrate')
 
             # Create superuser if it doesn't exist
             User = get_user_model()
