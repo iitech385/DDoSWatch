@@ -19,6 +19,21 @@ ALLOWED_HOSTS.extend(
     )
 )
 
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "https://d-do-s-watch.vercel.app",
+    "https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app",
+    "http://localhost:5173",  # For local development
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://d-do-s-watch.vercel.app",
+    "https://d-do-s-watch-git-main-iitech385-gmailcoms-projects.vercel.app",
+    "http://localhost:5173",  # For local development
+]
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -105,12 +120,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# CORS settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://your-frontend-domain.vercel.app",
-]
 
 # Rest Framework settings
 REST_FRAMEWORK = {
